@@ -52,4 +52,26 @@ class Solution(object):
                 return [dic[rest],i]
 ```
 最终结果：  32 ms	13.4 MB
-用字典存储已遍历过的列表元素和索引，牺牲了一点存储空间，但是速度大幅提升。
+用字典存储已遍历过的列表元素和索引，牺牲了一点存储空间，但是最坏的情况只需要比较n方/2次，速度大幅提升。
+
+## Java
+```
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+		int[] list = {0,0};
+        for(int i = 0;i < nums.length ;i++){
+            int rest = target - nums[i];
+            if(!map.containsKey(rest)) {
+            	map.put(nums[i],i);
+            }else {
+            	list[0] = map.get(rest);
+            	list[1] = i;
+            	return list;
+            }
+        }
+        return list;
+    }
+}
+```
+最终结果：  2 ms	38.2 MB
