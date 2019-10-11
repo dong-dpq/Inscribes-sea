@@ -105,6 +105,35 @@ class Solution(object):
 
 ## Java
 ```
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        // List<List<Integer>> list = new ArrayList<List<Integer>>();
+        List<Integer> childList;
+        Map<Integer,Integer> map;
+        Set<List<Integer>> set = new  HashSet<List<Integer>>();
+        Arrays.sort(nums);
+        for(int i = 0; i < nums.length-1; i++){
+            if(nums[i] > 0){
+                break;
+            }
+            map = new HashMap<Integer,Integer>();
+            for(int j = i+1; j < nums.length; j++){
+                int left = -nums[i] - nums[j];
+                if (map.containsKey(left)){
+                    childList = new ArrayList<Integer>();
+                    childList.add(nums[i]);
+                    childList.add(left);
+                    childList.add(nums[j]);
+                    childList.sort(null);
+                    set.add(childList);
+                }else{
+                    map.put(nums[j], j);
+                }
+            }
+        }
+        return new ArrayList<List<Integer>>(set);
+    }  
+}
 
 ```
-最终结果：
+最终结果：579 ms	50.9 MB
