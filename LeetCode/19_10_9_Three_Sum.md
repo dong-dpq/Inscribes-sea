@@ -137,3 +137,4 @@ class Solution {
 
 ```
 最终结果：579 ms	50.9 MB
+发现java和python中，set是共通的，map对应dic。
