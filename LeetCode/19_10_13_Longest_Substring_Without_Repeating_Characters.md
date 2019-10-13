@@ -106,8 +106,45 @@ class Solution(object):
 
 用元组获取子串长度上界，作为初始值再进行搜索。
 
+### 大佬的解法
+```
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        string = ""
+        result = 0
+        for i in s:
+            if i in string:
+                string = string[string.index(i)+1:]+i
+            else:
+                string += i
+            result = max(result, len(string))
+        return result
+```
+最终结果：48 ms	12.1 MB
+
+这也太精妙了，怎么想出来的啊...
+
 ## Java
 ```
-
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        String str = "";
+        int result = 0;
+        for(int i = 0; i < s.length(); i++){
+        	char c = s.charAt(i);
+            if (str.contains(c+"")){
+                str = str.substring(str.indexOf(c)+1,str.length())+c;
+            }else {
+            	str += c;
+            }
+            result = result > str.length() ? result : str.length();
+        }
+        return result;
+    }
+}
 ```
-最终结果：
+最终结果：13 ms	37.6 MB
