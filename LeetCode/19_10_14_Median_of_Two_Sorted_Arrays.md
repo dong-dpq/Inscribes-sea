@@ -102,7 +102,61 @@ class Solution(object):
 ```
 最终结果：76 ms	12 MB
 
-感觉就是用了四个指针，不断的去掉一个最高分和最低分...但是时间复杂度好像有点问题
+感觉就是用了四个指针，不断的去掉一个最高分和最低分...但是时间复杂度是O(m+n)，不符合要求....
+
+### 第三次提交
+```
+class Solution(object):
+    def findMedianSortedArrays(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: float
+        """
+        if (len(nums1)>len(nums2)):
+            nums1,nums2 = nums2,nums1
+        a1 = 0
+        a2 = len(nums1)
+        hf = (len(nums1) + len(nums2) + 1)/2
+        
+        if len(nums1) == 0:
+            return float(nums2[hf - 1]) if len(nums2)%2 == 1 else (nums2[hf]+nums2[hf-1])/2.0
+        
+        while(a1 <= a2):
+            rightA = (a1 + a2+1)/2
+            leftA = rightA -1        
+            rightB = hf - rightA
+            leftB = rightB -1
+
+            if (rightA > 0  and nums1[leftA] > nums2[rightB]):
+                a2 -= 1
+            elif ( rightA < len(nums1) and nums1[rightA] < nums2[leftB]):
+                a1 += 1
+            else:
+                if(rightA == 0):
+                    maxLeft = nums2[leftB]
+                elif(leftB < 0):
+                    maxLeft = nums1[leftA]
+                else:
+                    maxLeft = max(nums2[leftB], nums1[leftA])
+                    
+                if(rightA == len(nums1)):
+                    minRight = nums2[rightB]
+                elif(rightB >= len(nums2)):
+                    minRight = nums1[rightA]
+                else:
+                    minRight = min(nums2[rightB], nums1[rightA])
+
+                if (len(nums1)+len(nums2))%2 == 1:
+                    return float(maxLeft)
+                else:
+                    return float((maxLeft+minRight))/2
+```
+最终结果：72 ms	11.9 MB
+
+核心思想是，找到两个列表的前(m+n+1)/2个最小的元素，最开始取第一个列表的前一半元素和第二个列表的前面部分元素，并且这两个部分的元素数量和要恒定为
+(m+n+1)/2；然后不断调整这部分中的元素，如果这个集合中存在某个元素大于剩余部分的最小值，就进行交换；直至这个集合中的元素比剩余集合的元素都要小。
+两个集合的边界就可以计算出所需要的中位数。
 
 ## Java
 ```
