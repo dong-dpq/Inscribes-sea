@@ -160,6 +160,62 @@ class Solution(object):
 
 ## Java
 ```
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int m = nums1.length;
+        int n = nums2.length;
+        
+        if(m > n){
+            return this.findMedianSortedArrays(nums2,nums1);
+        }
+        
+        int hf = (m+n+1)/2;
+        int a1 = 0;
+        int a2 = m;
+        int maxLeft = 0,minRight = 0;
+        
+        // if(m == 0){
+        //     return n%2==1? nums2[hf - 1] :(nums2[hf]+nums2[hf-1])/2.0;
+        // }
+        
+        while(a1 <= a2){
+            int rightA = (a1+a2+1)/2;
+            int leftA = rightA - 1;
+            
+            int rightB = hf - rightA;
+            int leftB = rightB - 1;
+            
+            if (rightA < m && nums2[leftB] > nums1[rightA]){
+                a1 += 1;
+            }else if (leftA >= 0 && nums1[leftA] > nums2[rightB] ){
+                a2 -= 1;
+            }else{
+                
+                if(leftA < 0){
+                    maxLeft = nums2[leftB];
+                }else if(leftB < 0){
+                    maxLeft = nums1[leftA];
+                }else{
+                    maxLeft = nums1[leftA] > nums2[leftB]? nums1[leftA]: nums2[leftB];
+                }
+                if((m+n)%2 == 1){
+                    return maxLeft;
+                }
+                if(rightA >= m){
+                    minRight = nums2[rightB];
+                }else if(rightB >= n){
+                    minRight = nums1[rightA];
+                }else{
+                    minRight = nums1[rightA] < nums2[rightB]? nums1[rightA]: nums2[rightB];
+                }
 
+                return (maxLeft + minRight)/2.0;
+            }
+        }
+        return 0.0;
+    }
+}
 ```
-最终结果：
+最终结果：18 ms	47 MB
+
+这个算法太复杂了...特别是判断游标和0、m的大小关系，时不时的就会数组越界...特别是对于用例[ [],[1] ]，需要将数组分奇偶拆开来处理，或者跟上面的python一样，加一个空数组判断。
