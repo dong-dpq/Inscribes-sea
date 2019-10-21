@@ -101,6 +101,35 @@ class Solution(object):
 
 ## Java
 ```
-
+class Solution {
+    public String longestPalindrome(String s) {
+        int resultLen=0,resultBeg=0,resultEnd=0;
+        for(int i =0;i < s.length(); i++){
+            int beg=0,end=0;
+            beg = i;
+            end = i;
+            while(beg>=0 && end<s.length() && s.charAt(beg) == s.charAt(end)){
+                end += 1;
+                beg -= 1;
+            }
+            int len1 = end-beg-1;
+            beg = i;
+            end = i+1;
+            while(beg>=0 && end<s.length() && s.charAt(beg) == s.charAt(end)){
+                end += 1;
+                beg -= 1;
+            }
+            int len2 = end-beg-1;
+            int maxLen = Math.max(len1,len2);
+            if(maxLen > resultLen){
+                resultLen = maxLen;
+                resultBeg = i - (maxLen-1)/2;
+                resultEnd = resultBeg + maxLen;
+                
+            }
+        }
+        return s.substring(resultBeg,resultEnd);
+    }
+}
 ```
-最终结果：
+最终结果：15 ms	35.9 MB
