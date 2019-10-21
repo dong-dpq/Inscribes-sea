@@ -67,6 +67,38 @@ class Solution(object):
 
 同学跟我说，判断是否回文不用一个个字符遍历判断，直接用s和s[::-1]比较就行。emmm虽然通过了，但是速度还是好慢。
 
+### 第三次提交
+```
+class Solution(object):
+    def longestPalindrome(self, s): 
+        """
+        :type s: str
+        :rtype: str
+        """
+        sta = 0
+        end = 0
+        for i in range(len(s)):
+            left, right = i, i
+            while(left >= 0 and right <= len(s) -1 and s[left] == s[right]):
+                left -= 1
+                right += 1
+            len1 = right - left - 1
+            left, right = i, i+1
+            while(left >= 0 and right <= len(s) -1 and s[left] == s[right]):
+                left -= 1
+                right += 1
+            len2 = right - left - 1
+            maxL = max(len1,len2)
+            if maxL > end-sta:
+                sta = i - (maxL-1)/2
+                end = sta + maxL - 1
+        return s[sta:end+1]
+```
+最终结果：888 ms	11.9 MB
+
+参考大佬的扩展中心解法，每次循环选择一个中心，进行左右扩展，判断左右字符是否相等。
+
+
 ## Java
 ```
 
