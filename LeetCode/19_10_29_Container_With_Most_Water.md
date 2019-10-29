@@ -43,12 +43,46 @@ class Solution {
 
 ### 第二次提交
 ```
-
+class Solution {
+    public int maxArea(int[] height) {
+        int sta = 0,end = height.length - 1,area = 0;
+        while(sta < end){
+            int temp = Math.min(height[sta], height[end])*(end-sta);
+            area = Math.max(temp, area);
+            if (height[sta]<height[end]){
+                sta++;
+            }else{
+                end--;
+            }
+        }
+        return area;
+    }
+}
 ```
-最终结果：
+最终结果：2 ms	39.7 MB
+
+双指针求解。关键点在于，每次移动较短的那条边。
 
 ## Python
 ```
-
+class Solution(object):
+    def maxArea(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        sta = 0
+        end = len(height )- 1
+        area = 0
+        while(sta < end):
+            temp = min(height[sta], height[end])*(end-sta)
+            area = max(temp, area);
+            if (height[sta]<height[end]):
+                sta+=1
+            else:
+                end-=1
+        return area;
 ```
-最终结果：
+最终结果：112 ms	13.2 MB
+
+双指针解法。
