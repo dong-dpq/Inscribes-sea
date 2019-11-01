@@ -53,6 +53,53 @@ class Solution {
 
 最笨的双指针法。
 
+### 第二次提交
+```
+class Solution {
+    public int strStr(String haystack, String needle) {
+        if(needle.length() == 0){
+            return 0;
+        }else if(needle.length() > haystack.length()){
+            return -1;
+        }else{
+            int n=needle.length();
+            int[] dp = new int[n];
+            dp[0] = 0;
+            for(int i = 1,j = 0; i < n; i++){
+                while(j > 0 && needle.charAt(j) != needle.charAt(i)){
+                    j = dp[j - 1];
+                }
+                if(needle.charAt(i) == needle.charAt(j)){
+                    j++;
+                }
+                dp[i] = j;
+            }
+            for(int k = 0; k < haystack.length()- needle.length() + 1;){
+                for(int m = 0; m < n;){
+                    if(haystack.charAt(k+m) == needle.charAt(m)){
+                        m++;
+                    }else if(m == 0){
+                        k++;
+                        break;
+                    }else{
+                        k = k + m - dp[m-1];
+                        m = dp[m-1];
+                        break; 
+                    }
+                    if(m >= n){
+                        return k;
+                    }
+                }
+            }
+            return -1;
+        }
+    }
+}
+```
+最终结果：3 ms	37.2 MB
+
+学了一下KMP算法，好难懂qaq...
+
 ## Python
 ```
 
