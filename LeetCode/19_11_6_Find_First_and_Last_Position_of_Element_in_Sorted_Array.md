@@ -82,6 +82,45 @@ class Solution {
 
 ## Python
 ```
-
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        # 思路 二分法两次
+        # 第一次找到的是左边界，即nums[m]==target and m ==0   or  nums[m] == target and nums[m-1] == target  
+        # 第二次找到的是右边界，即nums[m]==target and m ==l-1 or  nums[m] == target and nums[m+1] == target
+        if not nums:
+            return [-1,-1]
+        import sys
+        left_index = -1
+        right_index = -1
+        # 可以扩充nums来解决边界问题
+        nums.insert(0,-sys.maxsize-1)
+        nums.append(sys.maxsize)
+        left = 1
+        right = len(nums)-1
+        while(left <= right):
+            m = (left + right) // 2
+            if nums[m] == target and nums[m-1]<target:
+                left_index = m-1
+                break 
+            elif nums[m]< target:
+                left = m+1    
+            elif nums[m] > target or (nums[m] == target and nums[m+1]>=target):
+                right = m -1
+        left = 1
+        right = len(nums)-1        
+        while(left <= right):
+            m = (left + right) // 2
+            if nums[m] == target and nums[m+1]>target:
+                right_index = m-1
+                break 
+            elif nums[m]> target:
+                right = m -1   
+            elif nums[m] <target or (nums[m] == target and nums[m-1]<=target):
+                left = m+1    
+       
+        # print(left_index,right_index)
+        return [left_index,right_index]
 ```
 最终结果：
+
+群皮写的python版，十分之精妙@ChinaYiqun
