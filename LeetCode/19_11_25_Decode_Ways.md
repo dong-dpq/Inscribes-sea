@@ -57,7 +57,7 @@ class Solution {
 ```
 最终结果：Time Limit Exceeded
 
-超时了...
+超时了...想用动态规划，但是写蒙了...
 
 
 ### 第二次提交
