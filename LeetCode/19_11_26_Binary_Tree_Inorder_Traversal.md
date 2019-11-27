@@ -51,12 +51,48 @@ class Solution {
 
 直接递归解决...下一步想想用迭代算法...
 
-
 ### 第二次提交
 ```
-
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {    
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<Integer>();
+        if(root == null){
+            return list;
+        }
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        TreeNode useRoot = root;
+        stack.push(useRoot);
+        while(!stack.empty() ){
+            while(useRoot.left != null){
+                stack.push(useRoot.left);
+                useRoot = useRoot.left;
+            }
+            
+            if(stack.peek() != null){
+                TreeNode temp = stack.pop();
+                list.add(temp.val);
+                if(temp.right != null){
+                    stack.push(temp.right);
+                    useRoot = temp.right;
+                }
+            }
+        }
+        return list;
+    }
+}
 ```
-最终结果：
+最终结果：	1 ms	34.7 MB
+
+学了一手非递归的中序遍历...好难...
 
 ## Python
 ```
